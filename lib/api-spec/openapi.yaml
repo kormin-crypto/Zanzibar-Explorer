@@ -3,20 +3,30 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: Zanzibar Tourism API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: packages
+    description: Tourism packages
+  - name: activities
+    description: Activities and experiences
+  - name: accommodations
+    description: Accommodation options
+  - name: inquiries
+    description: Booking inquiries
+  - name: summary
+    description: Summary and stats
+
 paths:
   /healthz:
     get:
       operationId: healthCheck
       tags: [health]
       summary: Health check
-      description: Returns server health status
       responses:
         "200":
           description: Healthy
@@ -24,6 +34,160 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /packages:
+    get:
+      operationId: listPackages
+      tags: [packages]
+      summary: List all tourism packages
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: minDays
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: maxDays
+          in: query
+          required: false
+          schema:
+            type: integer
+        - name: maxPrice
+          in: query
+          required: false
+          schema:
+            type: number
+      responses:
+        "200":
+          description: List of packages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Package"
+
+  /packages/{id}:
+    get:
+      operationId: getPackage
+      tags: [packages]
+      summary: Get a single package
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Package details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Package"
+        "404":
+          description: Not found
+
+  /activities:
+    get:
+      operationId: listActivities
+      tags: [activities]
+      summary: List all available activities
+      responses:
+        "200":
+          description: List of activities
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Activity"
+
+  /accommodations:
+    get:
+      operationId: listAccommodations
+      tags: [accommodations]
+      summary: List all accommodation options
+      responses:
+        "200":
+          description: List of accommodations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Accommodation"
+
+  /estimate:
+    post:
+      operationId: estimateCost
+      tags: [packages]
+      summary: Estimate cost for a custom package configuration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EstimateRequest"
+      responses:
+        "200":
+          description: Cost estimate
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EstimateResponse"
+
+  /inquiries:
+    post:
+      operationId: createInquiry
+      tags: [inquiries]
+      summary: Submit a booking inquiry
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateInquiryBody"
+      responses:
+        "201":
+          description: Inquiry submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Inquiry"
+
+  /summary:
+    get:
+      operationId: getSummary
+      tags: [summary]
+      summary: Get site summary stats (popular packages, activities count, etc.)
+      responses:
+        "200":
+          description: Summary data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Summary"
+
+  /packages/featured:
+    get:
+      operationId: getFeaturedPackages
+      tags: [packages]
+      summary: Get featured/highlighted packages for the homepage
+      responses:
+        "200":
+          description: Featured packages
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Package"
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +198,303 @@ components:
       required:
         - status
 
+    Package:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        slug:
+          type: string
+        tagline:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          description: "e.g. beach, adventure, cultural, luxury, family"
+        minDays:
+          type: integer
+        maxDays:
+          type: integer
+        basePricePerPersonPerDay:
+          type: number
+        imageUrl:
+          type: string
+        galleryImages:
+          type: array
+          items:
+            type: string
+        includedActivities:
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+        accommodation:
+          $ref: "#/components/schemas/Accommodation"
+        highlights:
+          type: array
+          items:
+            type: string
+        isFeatured:
+          type: boolean
+        rating:
+          type: number
+        reviewCount:
+          type: integer
+      required:
+        - id
+        - name
+        - slug
+        - tagline
+        - description
+        - category
+        - minDays
+        - maxDays
+        - basePricePerPersonPerDay
+        - imageUrl
+        - galleryImages
+        - includedActivities
+        - accommodation
+        - highlights
+        - isFeatured
+        - rating
+        - reviewCount
+
+    Activity:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          description: "e.g. water, cultural, adventure, nature, food"
+        durationHours:
+          type: number
+        pricePerPerson:
+          type: number
+        imageUrl:
+          type: string
+        isPopular:
+          type: boolean
+      required:
+        - id
+        - name
+        - description
+        - category
+        - durationHours
+        - pricePerPerson
+        - imageUrl
+        - isPopular
+
+    Accommodation:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        type:
+          type: string
+          description: "e.g. beach-resort, boutique-hotel, eco-lodge, luxury-villa, guesthouse"
+        description:
+          type: string
+        location:
+          type: string
+        pricePerNight:
+          type: number
+        imageUrl:
+          type: string
+        amenities:
+          type: array
+          items:
+            type: string
+        stars:
+          type: integer
+      required:
+        - id
+        - name
+        - type
+        - description
+        - location
+        - pricePerNight
+        - imageUrl
+        - amenities
+        - stars
+
+    EstimateRequest:
+      type: object
+      properties:
+        packageId:
+          type: ["integer", "null"]
+        accommodationId:
+          type: integer
+        activityIds:
+          type: array
+          items:
+            type: integer
+        numberOfVisitors:
+          type: integer
+        numberOfDays:
+          type: integer
+      required:
+        - accommodationId
+        - activityIds
+        - numberOfVisitors
+        - numberOfDays
+
+    EstimateResponse:
+      type: object
+      properties:
+        accommodationCost:
+          type: number
+        activitiesCost:
+          type: number
+        guideCost:
+          type: number
+        subtotal:
+          type: number
+        taxes:
+          type: number
+        totalCost:
+          type: number
+        perPersonCost:
+          type: number
+        breakdown:
+          type: array
+          items:
+            $ref: "#/components/schemas/CostBreakdownItem"
+      required:
+        - accommodationCost
+        - activitiesCost
+        - guideCost
+        - subtotal
+        - taxes
+        - totalCost
+        - perPersonCost
+        - breakdown
+
+    CostBreakdownItem:
+      type: object
+      properties:
+        label:
+          type: string
+        amount:
+          type: number
+        detail:
+          type: string
+      required:
+        - label
+        - amount
+        - detail
+
+    CreateInquiryBody:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        packageId:
+          type: ["integer", "null"]
+        numberOfVisitors:
+          type: integer
+        numberOfDays:
+          type: integer
+        preferredStartDate:
+          type: string
+        message:
+          type: string
+        activityIds:
+          type: array
+          items:
+            type: integer
+        accommodationId:
+          type: ["integer", "null"]
+        estimatedTotal:
+          type: ["number", "null"]
+      required:
+        - firstName
+        - lastName
+        - email
+        - numberOfVisitors
+        - numberOfDays
+        - message
+
+    Inquiry:
+      type: object
+      properties:
+        id:
+          type: integer
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        packageId:
+          type: ["integer", "null"]
+        numberOfVisitors:
+          type: integer
+        numberOfDays:
+          type: integer
+        preferredStartDate:
+          type: ["string", "null"]
+        message:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+      required:
+        - id
+        - firstName
+        - lastName
+        - email
+        - numberOfVisitors
+        - numberOfDays
+        - message
+        - status
+        - createdAt
+
+    Summary:
+      type: object
+      properties:
+        totalPackages:
+          type: integer
+        totalActivities:
+          type: integer
+        totalAccommodations:
+          type: integer
+        totalInquiries:
+          type: integer
+        categories:
+          type: array
+          items:
+            type: string
+        popularActivities:
+          type: array
+          items:
+            $ref: "#/components/schemas/Activity"
+        featuredPackages:
+          type: array
+          items:
+            $ref: "#/components/schemas/Package"
+      required:
+        - totalPackages
+        - totalActivities
+        - totalAccommodations
+        - totalInquiries
+        - categories
+        - popularActivities
+        - featuredPackages
