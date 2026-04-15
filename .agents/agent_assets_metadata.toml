@@ -1,8 +1,25 @@
 uploads = []
-outputs = []
 
 [[generated]]
 id = "5CdRVfKq-R2-rritT1yCv"
 uri = "file://artifacts/zanzibar-tourism/src/assets/logo.png"
 type = "image"
 title = "zanzibar pearls logo"
+
+[[outputs]]
+id = "4iRTpjzL_pSluv5TkLNAn"
+uri = "file://attached_assets/stock_images/nungwi_zanzibar_beach_1.jpg"
+type = "image"
+title = "Nungwi beach Zanzibar Tanzania turquoise water white sand palm trees"
+
+[[outputs]]
+id = "swLBGEcNJeGD_dgmp6YJh"
+uri = "file://attached_assets/stock_images/nungwi_zanzibar_beach_2.jpg"
+type = "image"
+title = "Nungwi beach Zanzibar Tanzania turquoise water white sand palm trees"
+
+[[outputs]]
+id = "QrFVJ4lL0UwWOLUC7Cuc9"
+uri = "file://attached_assets/stock_images/nungwi_zanzibar_beach_3.jpg"
+type = "image"
+title = "Nungwi beach Zanzibar Tanzania turquoise water white sand palm trees"

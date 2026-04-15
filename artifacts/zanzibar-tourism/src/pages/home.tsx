@@ -7,6 +7,7 @@ import {
   useGetFeaturedPackages,
   useGetSummary,
 } from "@workspace/api-client-react";
+import heroImage from "@/assets/hero-nungwi.jpg";
 
 const stats = [
   { label: "Happy Travelers", value: "12,000+", icon: Users },
@@ -49,7 +50,7 @@ export default function Home() {
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=1920&q=90"
+            src={heroImage}
             alt="Zanzibar paradise beach"
             className="w-full h-full object-cover"
           />
