@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, X, Palmtree } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoSrc from "@/assets/logo.png";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -34,17 +35,12 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-full ocean-gradient flex items-center justify-center">
-              <Palmtree className="w-4 h-4 text-white" />
-            </div>
-            <span
-              className={`font-display text-xl font-semibold tracking-wide transition-colors ${
-                scrolled || !isHome ? "text-primary" : "text-white"
-              }`}
-            >
-              Zanzibar Pearl
-            </span>
+          <Link href="/" className="flex items-center group">
+            <img
+              src={logoSrc}
+              alt="Zanzibar Pearls"
+              className="h-12 lg:h-14 w-auto object-contain drop-shadow-sm"
+            />
           </Link>
 
           <nav className="hidden lg:flex items-center gap-1">

@@ -1,0 +1,8 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "5CdRVfKq-R2-rritT1yCv"
+uri = "file://artifacts/zanzibar-tourism/src/assets/logo.png"
+type = "image"
+title = "zanzibar pearls logo"

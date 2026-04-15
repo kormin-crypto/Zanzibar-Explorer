@@ -32,7 +32,7 @@ type FormData = z.infer<typeof formSchema>;
 const contactInfo = [
   { icon: MapPin, label: "Address", value: "Shangani Street, Stone Town\nZanzibar, Tanzania" },
   { icon: Phone, label: "Phone", value: "+255 777 123 456" },
-  { icon: Mail, label: "Email", value: "info@zanzibar-pearl.com" },
+  { icon: Mail, label: "Email", value: "info@zanzibar-pearls.com" },
   { icon: Clock, label: "Office Hours", value: "Mon–Fri: 8am – 6pm\nSat–Sun: 9am – 4pm (EAT)" },
 ];
 

@@ -19,7 +19,7 @@ const testimonials = [
   {
     name: "Emma & James",
     country: "United Kingdom",
-    text: "Zanzibar Pearl made our honeymoon absolutely magical. Every detail was perfect — from the private dhow cruise to the candlelit beach dinner. We will never forget it.",
+    text: "Zanzibar Pearls made our honeymoon absolutely magical. Every detail was perfect — from the private dhow cruise to the candlelit beach dinner. We will never forget it.",
     rating: 5,
     image: "https://images.unsplash.com/photo-1522529599102-193c0d76b5b6?w=80",
   },
@@ -176,7 +176,7 @@ export default function Home() {
               </p>
               <p className="text-muted-foreground leading-relaxed mb-8">
                 From the UNESCO World Heritage-listed Stone Town to the remote beaches of the east coast, 
-                every corner of this magical island tells a story. Let Zanzibar Pearl be your guide.
+                every corner of this magical island tells a story. Let Zanzibar Pearls be your guide.
               </p>
               <div className="grid grid-cols-2 gap-6">
                 {[
