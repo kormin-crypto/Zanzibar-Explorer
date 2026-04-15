@@ -6,6 +6,7 @@ import packagesRouter from "./packages";
 import estimateRouter from "./estimate";
 import inquiriesRouter from "./inquiries";
 import summaryRouter from "./summary";
+import adminRouter from "./admin";
 
 const router: IRouter = Router();
 
@@ -16,5 +17,6 @@ router.use(packagesRouter);
 router.use(estimateRouter);
 router.use(inquiriesRouter);
 router.use(summaryRouter);
+router.use(adminRouter);
 
 export default router;
