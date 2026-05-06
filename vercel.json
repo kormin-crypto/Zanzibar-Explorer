@@ -1,0 +1,8 @@
+{
+  "installCommand": "pnpm install",
+  "buildCommand": "pnpm --filter @workspace/zanzibar-tourism run build",
+  "outputDirectory": "artifacts/zanzibar-tourism/dist/public",
+  "rewrites": [
+    { "source": "/api/:path*", "destination": "/api/index" }
+  ]
+}
