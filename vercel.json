@@ -1,5 +1,5 @@
 {
-  "installCommand": "pnpm install",
+  "installCommand": "pnpm install --no-frozen-lockfile",
   "buildCommand": "pnpm --filter @workspace/zanzibar-tourism run build",
   "outputDirectory": "artifacts/zanzibar-tourism/dist/public",
   "rewrites": [
