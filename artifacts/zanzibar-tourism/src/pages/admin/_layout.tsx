@@ -27,16 +27,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   useEffect(() => {
-    const pw = localStorage.getItem("admin_password");
-    if (!pw) { navigate("/admin"); return; }
-    adminApi.getInquiries().catch(() => {
-      localStorage.removeItem("admin_password");
-      navigate("/admin");
-    });
+    adminApi.getInquiries().catch(() => navigate("/admin"));
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("admin_password");
+  const handleLogout = async () => {
+    await adminApi.logout().catch(() => {});
     navigate("/admin");
   };
 

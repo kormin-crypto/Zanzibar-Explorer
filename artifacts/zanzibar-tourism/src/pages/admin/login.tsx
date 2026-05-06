@@ -13,12 +13,10 @@ export default function AdminLogin() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    localStorage.setItem("admin_password", password);
     try {
-      await adminApi.getInquiries();
+      await adminApi.login(password);
       navigate("/admin/dashboard");
     } catch {
-      localStorage.removeItem("admin_password");
       setError("Incorrect password. Please try again.");
     } finally {
       setLoading(false);

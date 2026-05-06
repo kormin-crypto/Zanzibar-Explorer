@@ -1,16 +1,10 @@
 const API_BASE = import.meta.env.VITE_API_URL ?? "/api";
 
-function getPassword(): string {
-  return localStorage.getItem("admin_password") ?? "";
-}
-
 async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     method,
-    headers: {
-      "Content-Type": "application/json",
-      "X-Admin-Password": getPassword(),
-    },
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: body !== undefined ? JSON.stringify(body) : undefined,
   });
   if (!res.ok) {
@@ -21,6 +15,9 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
 }
 
 export const adminApi = {
+  login: (password: string) => request<{ ok: boolean }>("POST", "/admin/login", { password }),
+  logout: () => request<{ ok: boolean }>("POST", "/admin/logout"),
+
   // Inquiries
   getInquiries: () => request<Inquiry[]>("GET", "/admin/inquiries"),
   updateInquiryStatus: (id: number, status: string) =>
